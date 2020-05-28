@@ -11,9 +11,14 @@ type Stack struct {
 	data []interface{}
 }
 
-func NewStack(size int) *Stack {
+func NewStack(args ...int) *Stack {
+	defaultSize := 1 << 4
+	if len(args) > 0 {
+		defaultSize = args[0]
+	}
+
 	return &Stack{
-		data: make([]interface{}, 0, size),
+		data: make([]interface{}, 0, defaultSize),
 	}
 }
 
@@ -42,8 +47,12 @@ func (s *Stack) IsEmpty() bool {
 	return len(s.data) == 0
 }
 
+func (s *Stack) Size() int {
+	return len(s.data)
+}
+
 func main() {
-	stack := NewStack(10)
+	stack := NewStack()
 	stack.Push(1)
 	stack.Push(2)
 	stack.Push(3)
